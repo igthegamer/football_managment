@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         Competition competition = new Competition("MaCompétition");
         Scanner scanner = new Scanner(System.in);
-
+        boolean displayMenu = true;
         int choix;
         String nomEquipe;
         String nomEntraineur;
@@ -23,21 +23,22 @@ public class Main {
         String nomEquipeStats;
 
         do {
-            System.out.println("Menu principal :");
-            System.out.println("1. Ajouter une équipe");
-            System.out.println("2. Ajouter un joueur");
-            System.out.println("3. Ajouter un entraîneur");
-            System.out.println("4. Ajouter un arbitre");
-            System.out.println("5. Ajouter un match");
-            System.out.println("6. Afficher les résultats des matchs");
-            System.out.println("7. Afficher la liste des joueurs d'une équipe");
-            System.out.println("8. Rechercher des rencontres entre deux équipes");
-            System.out.println("9. Afficher les statistiques d'une équipe");
-            System.out.println("0. Quitter");
-            System.out.print("Choix : ");
-
+            if (displayMenu) {
+                System.out.println("Menu principal :");
+                System.out.println("1. Ajouter une équipe");
+                System.out.println("2. Ajouter un joueur");
+                System.out.println("3. Ajouter un entraîneur");
+                System.out.println("4. Ajouter un arbitre");
+                System.out.println("5. Ajouter un match");
+                System.out.println("6. Afficher la liste des joueurs d'une équipe");
+                System.out.println("7. Afficher les résultats des matchs");
+                System.out.println("8.Afficher les statistiques d'une équipe\"");
+                System.out.println(("9.Afficher le classement de compétiton "));
+                System.out.println("0. Quitter");
+                System.out.print("Choix : ");
+            }
             choix = scanner.nextInt();
-            scanner.nextLine();  // Consommer la nouvelle ligne après le choix
+            scanner.nextLine();
 
             switch (choix) {
                 case 1:
@@ -56,7 +57,6 @@ public class Main {
                     break;
 
                 case 2:
-                    // Ajouter un joueur
                     System.out.print("Nom du joueur : ");
                     String nomJoueur = scanner.nextLine();
 
@@ -71,7 +71,7 @@ public class Main {
                     System.out.print("Poste du joueur : ");
                     String posteJoueur = scanner.nextLine();
 
-                    // Sélectionner l'équipe à laquelle ajouter le joueur
+
                     System.out.print("Nom de l'équipe : ");
                     nomEquipeJoueur = scanner.nextLine();
                     Equipe equipeJoueur = competition.getEquipeByName(nomEquipeJoueur);
@@ -113,6 +113,10 @@ public class Main {
 
                     Arbitre referee = new Arbitre(nomArbitre, ageArbitre,nbmatch);
                     competition.addArbitre(referee);
+                    displayMenu = false;
+                    System.out.println("Appuyez sur Entrée pour revenir au menu...");
+                    displayMenu = true;
+                    scanner.nextLine();
                     break;
 
                 case 5:
@@ -142,17 +146,24 @@ public class Main {
 
                     Match match = new Match(equipe1, equipe2, arbitre, tour, butsEquipe1, butsEquipe2);
                     competition.addMatch(match);
+                    displayMenu = false;
+                    System.out.println("Appuyez sur Entrée pour revenir au menu...");
+                    displayMenu = true;
+                    scanner.nextLine();
                     break;
 
 
 
 
                 case 6:
-                    // Afficher la liste des joueurs d'une équipe
                     System.out.print("Nom de l'équipe : ");
                     nomEquipeJoueurs = scanner.nextLine();
                     Equipe equipeJoueurs = competition.getEquipeByName(nomEquipeJoueurs);
                     equipeJoueurs.Affiche();
+                    displayMenu = false;
+                    System.out.println("Appuyez sur Entrée pour revenir au menu...");
+                    displayMenu = true;
+                    scanner.nextLine();
                     break;
 
                 case 7:
@@ -163,17 +174,16 @@ public class Main {
                     System.out.print("Nom de l'équipe 2 : ");
                     String nomEquipe_exterieur = scanner.nextLine();
                     Equipe equipe22 = competition.getEquipeByName(nomEquipe_exterieur);
-//                    System.out.print("Nom de l'arbitre : ");
-//                    String nomArbitreMatch = scanner.nextLine();
-//                    Arbitre Arbitrematch = competition.getArbitreByName(nomArbitreMatch);
+//
 
 
-
-//                    // Sélectionner le tour
-//                    System.out.print("Tour : ");
-//                    String tourMatch = scanner.nextLine();
+//
 
                     competition.rechercheRencontre(equipe11, equipe22);
+                    displayMenu = false;
+                    System.out.println("Appuyez sur Entrée pour revenir au menu...");
+                    displayMenu = true;
+                    scanner.nextLine();
                     break;
 
                 case 8:
@@ -181,14 +191,25 @@ public class Main {
                     nomEquipeStats = scanner.nextLine();
                     Equipe equipeStats = competition.getEquipeByName(nomEquipeStats);
                     equipeStats.afficherStatistiques();
+                    displayMenu = false;
+                    System.out.println("Appuyez sur Entrée pour revenir au menu...");
+                    displayMenu = true;
+                    scanner.nextLine();
                     break;
-
+                case 9:
+                    competition.classement();
+                    displayMenu = false;
+                    System.out.println("Appuyez sur Entrée pour revenir au menu...");
+                    displayMenu = true;
+                    scanner.nextLine();
+                    break;
                 case 0:
                     System.out.println("Au revoir !");
                     break;
 
                 default:
                     System.out.println("Choix invalide. Veuillez réessayer.");
+                    displayMenu = false;
             }
 
         } while (choix != 0);
